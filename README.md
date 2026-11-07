@@ -7,13 +7,13 @@ bundle for typer.hayasaku.fr.
 npm install
 npm run dev        # http://localhost:5173, with hot reload
 npm run build      # type-checks and builds to dist/
-npm run assemble   # puts TypeR Studio's files in dist/, from ../TypeR-Studio, the TypeR-Web clone (or: npm run assemble -- <folder>)
+npm run assemble   # puts TypeR Studio's files in dist/, from ../TypeR-Studio (or: npm run assemble -- <folder>)
 npm run preview    # serves dist/ on http://localhost:4173, with /web/ once assembled
 npm test           # Playwright, on the assembled build, in your installed Google Chrome
 ```
 
 Nothing built is committed. On each push of `main`, `.github/workflows/deploy.yml` builds the site, adds TypeR Studio
-from `main` of [ScanR/TypeR-Web](https://github.com/ScanR/TypeR-Web) and publishes the whole on GitHub Pages. TypeR-Web
+from `main` of [ScanR/TypeR-Studio](https://github.com/ScanR/TypeR-Studio) and publishes the whole on GitHub Pages. TypeR-Studio
 asks for the same deployment when its `main` changes (a `studio-updated` repository_dispatch).
 
 TypeR Studio's files keep the addresses the installed apps download them from: `/web/`, `/i18n.js`, `/assets/brand/`,
@@ -80,7 +80,7 @@ cover: /images/news/3-1.webp
   `src/data/content.ts`). They download the latest release and start its installer, which asks for the new TypeR (UXP)
   or Legacy (CEP).
 - **Download.** One link for both editions: `TypeR.zip` from the latest release (`LINKS.download`).
-- **Web version.** `/web/` is TypeR Studio for Web, from the TypeR-Web repository (see above). It shares
+- **Web version.** `/web/` is TypeR Studio for Web, from the TypeR-Studio repository (see above). It shares
   `/assets/fonts/` with the site: a font of the same name there is TypeR Studio's.
 - **"New" badges.** They come from the 3.0 CHANGELOG of develop and the panel's What's new tour. The story steps all carry one, and toolkit entries
   get one with `isNew: true`.
@@ -97,6 +97,6 @@ cover: /images/news/3-1.webp
 
 The page no longer letters text itself: the story shows recordings. `public/assets/fonts/` still holds Latin subsets of
 CC Wild Words Roman (Comicraft) and Fight to the Finish BB (Blambot), both commercial and unused by the site. **Delete
-them from there and from TypeR-Web's `assets/fonts/` before the site goes public, unless their web-embedding
+them from there and from TypeR-Studio's `assets/fonts/` before the site goes public, unless their web-embedding
 licences are covered.**
 

@@ -177,7 +177,7 @@ test("one download, socials in the nav", async ({ page }) => {
     await expect(downloads).toBeVisible();
     await expect(downloads).toContainText("free, lightweight Photoshop-like app made for lettering");
     await expect(downloads.getByRole("link", { name: "the ZIP" })).toHaveAttribute("href", DOWNLOAD);
-    const studio = "https://github.com/ScanR/TypeR-Web/releases/latest/download/";
+    const studio = "https://github.com/ScanR/TypeR-Studio/releases/latest/download/";
     await expect(downloads.getByRole("link", { name: "Mac (Apple chip)" })).toHaveAttribute("href", studio + "TypeR-Studio-arm64.dmg");
     await expect(downloads.getByRole("link", { name: "Mac (Intel)" })).toHaveAttribute("href", studio + "TypeR-Studio-x64.dmg");
     await expect(downloads.getByRole("link", { name: "Windows" })).toHaveAttribute("href", studio + "TypeR-Studio-Setup.exe");

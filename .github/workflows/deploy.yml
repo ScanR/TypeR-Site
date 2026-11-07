@@ -1,6 +1,6 @@
-# Publishes typer.hayasaku.fr: the site's build, with TypeR Studio's files (ScanR/TypeR-Web,
+# Publishes typer.hayasaku.fr: the site's build, with TypeR Studio's files (ScanR/TypeR-Studio,
 # main) beside it at /web/ and the other addresses the installed apps use. Runs on a push here,
-# and when TypeR-Web's main changes: its workflow sends a "studio-updated" repository_dispatch.
+# and when TypeR-Studio's main changes: its workflow sends a "studio-updated" repository_dispatch.
 name: Deploy
 
 on:
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/checkout@v5
         with:
-          repository: ScanR/TypeR-Web
+          repository: ScanR/TypeR-Studio
           ref: main
           path: _studio
       - uses: actions/setup-node@v5
