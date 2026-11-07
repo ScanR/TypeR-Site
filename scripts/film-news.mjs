@@ -1,5 +1,5 @@
 // Films the news clips on the web version, one sharp screenshot per frame, with a visible cursor.
-// Serve the repository's root first: npx vite preview --outDir .. --port 4175 --strictPort
+// Serve the site with TypeR Studio first: npm run build && npm run assemble && npx vite preview --port 4175 --strictPort
 // Usage: node scripts/film-news.mjs [clip...]
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";

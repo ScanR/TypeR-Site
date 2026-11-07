@@ -6,8 +6,9 @@
   "description": "The TypeR 3.0 website (direction B, Panel Break), Vite + React + TypeScript.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/build-news.mjs && node scripts/publish.mjs",
-    "preview": "vite preview --outDir .. --port 4173 --strictPort",
+    "build": "tsc --noEmit && vite build && node scripts/build-news.mjs",
+    "assemble": "node scripts/assemble.mjs",
+    "preview": "vite preview --port 4173 --strictPort",
     "test": "playwright test",
     "test:install": "playwright install chromium"
   },

@@ -2,9 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { news } from "./src/news/plugin";
 
-// GitHub Pages serves the repository's root, next to web/. The build goes to
-// dist/, then scripts/publish.mjs copies it to the root. Its own files stay in
-// assets/site, apart from the assets of the web version.
+// The build goes to dist/, where scripts/assemble.mjs then puts TypeR Studio's
+// files (web/ and the rest), as GitHub Pages serves them. The site's own files
+// stay in assets/site, apart from the assets of the web version.
 export default defineConfig({
   plugins: [react(), news()],
   base: "/",

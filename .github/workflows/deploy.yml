@@ -1,0 +1,49 @@
+# Publishes typer.hayasaku.fr: the site's build, with TypeR Studio's files (ScanR/TypeR-Web,
+# main) beside it at /web/ and the other addresses the installed apps use. Runs on a push here,
+# and when TypeR-Web's main changes: its workflow sends a "studio-updated" repository_dispatch.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [studio-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time, the latest last
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+        with:
+          repository: ScanR/TypeR-Web
+          ref: main
+          path: _studio
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Stops if the files the apps download don't match their signed update
+      - run: node scripts/assemble.mjs _studio
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

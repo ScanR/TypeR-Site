@@ -18,7 +18,7 @@ export default defineConfig({
     viewport: { width: 1440, height: 900 },
   },
   webServer: {
-    command: "npm run build && npx vite preview --outDir .. --port 4174 --strictPort",
+    command: "npm run build && node scripts/assemble.mjs && npx vite preview --port 4174 --strictPort",
     url: "http://localhost:4174",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
