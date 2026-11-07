@@ -7,7 +7,7 @@ bundle for typer.hayasaku.fr.
 npm install
 npm run dev        # http://localhost:5173, with hot reload
 npm run build      # type-checks and builds to dist/
-npm run assemble   # puts TypeR Studio's files in dist/, from ../TypeR-Web (or: npm run assemble -- <folder>)
+npm run assemble   # puts TypeR Studio's files in dist/, from ../TypeR-Studio, the TypeR-Web clone (or: npm run assemble -- <folder>)
 npm run preview    # serves dist/ on http://localhost:4173, with /web/ once assembled
 npm test           # Playwright, on the assembled build, in your installed Google Chrome
 ```

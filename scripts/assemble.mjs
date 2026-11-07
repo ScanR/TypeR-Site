@@ -5,7 +5,7 @@
 // one web/desktop-update.json names, signed. This checks that before anything is published, and
 // stops otherwise.
 //
-//   node scripts/assemble.mjs [TypeR-Web folder]     STUDIO_DIR, or ../TypeR-Web beside this one
+//   node scripts/assemble.mjs [TypeR-Web folder]     STUDIO_DIR, or ../TypeR-Studio beside this one
 //
 // The files are taken from a commit (STUDIO_REF, HEAD by default), not from the working tree: a
 // change being made there doesn't go online. Studio's files go in last, over the site's.
@@ -18,7 +18,9 @@ import { fileURLToPath } from "node:url";
 
 const site = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(site, "dist");
-const studio = path.resolve(process.argv[2] || process.env.STUDIO_DIR || path.join(site, "..", "TypeR-Web"));
+// The repository is ScanR/TypeR-Web; its folder here is TypeR-Studio
+const beside = ["TypeR-Studio", "TypeR-Web"].map((name) => path.join(site, "..", name)).find((folder) => fs.existsSync(folder));
+const studio = path.resolve(process.argv[2] || process.env.STUDIO_DIR || beside || path.join(site, "..", "TypeR-Studio"));
 const ref = process.env.STUDIO_REF || "HEAD";
 // What TypeR Studio serves from the site's root. Keep it in step with desktop/scripts/site-files.js
 // in TypeR-Web, which lists what the apps download.
