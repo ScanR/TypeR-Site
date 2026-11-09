@@ -36,7 +36,7 @@ The Mac apps are signed and notarized. The Windows installer isn't signed yet: i
 
 **Select → Text** finds every letter on the page in seconds. **Remove Text** then cleans them all: plain backgrounds at once, and the art behind the letters redrawn by Generative Fill.
 
-![Select Text finding all the Japanese lettering of a page, then Remove Text cleaning it](/videos/news/studio-text-detection.mp4 "A whole page, from raw to clean")
+![Detect Text finding every letter of a page, then Remove Text painting the plain balloons and redrawing the art behind the sound effects](/videos/news/studio-text-detection.mp4 "A whole page, from raw to clean")
 
 Thanks to Miller for the work and the API behind it.
 
