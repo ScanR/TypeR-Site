@@ -23,7 +23,9 @@ deployment otherwise: the apps would refuse the update. `npm run dev` doesn't se
 after `npm run assemble`.
 
 `public/` also holds what has to stay at the root of the domain: `CNAME`, `install.sh` and `install.ps1` (the install
-commands of the TypeR panel), the Google Search Console check `googlee67516a5b196bff3.html` and `video-guide/`.
+commands of the TypeR panel), the Google Search Console check `googlee67516a5b196bff3.html`, `video-guide/`, and `studio-promo.json`, the switch
+of the TypeR Studio window in the TypeR panel: `"enabled": true` shows it at the panel's next start (within 10 minutes,
+the cache), once per `id`; a new `id` announces again to those who answered the last one.
 
 ```
 index.html               the page shell: SEO, Open Graph and Twitter tags, favicon, font preloads
