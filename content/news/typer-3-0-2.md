@@ -3,7 +3,7 @@ title: TypeR 3.0.2 and TypeR Studio
 date: 2026-11-09
 version: 3.0.2
 summary: Meet TypeR Studio, the free desktop app to clean and letter a whole chapter without Photoshop, with text detection and Generative Fill. TypeR 3.0.2 links it to Photoshop and fixes a long list of bugs.
-cover: /images/news/3-0-2-studio.jpg
+cover: /images/news/3-0-2-cover.jpg
 ---
 
 TypeR no longer needs Photoshop. **TypeR Studio** is a free desktop app for Mac and Windows: the TypeR panel you know, inside a workspace built for letterers, that now cleans pages too.
