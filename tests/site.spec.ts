@@ -181,6 +181,8 @@ test("one download, socials in the nav", async ({ page }) => {
     await expect(downloads.getByRole("link", { name: "Mac (Apple chip)" })).toHaveAttribute("href", studio + "TypeR-Studio-arm64.dmg");
     await expect(downloads.getByRole("link", { name: "Mac (Intel)" })).toHaveAttribute("href", studio + "TypeR-Studio-x64.dmg");
     await expect(downloads.getByRole("link", { name: "Windows" })).toHaveAttribute("href", studio + "TypeR-Studio-Setup.exe");
+    await expect(downloads.getByRole("link", { name: "Linux (AppImage)" })).toHaveAttribute("href", studio + "TypeR-Studio-x86_64.AppImage");
+    await expect(downloads.getByRole("link", { name: "Linux (.deb)" })).toHaveAttribute("href", studio + "TypeR-Studio-amd64.deb");
     await downloads.getByRole("link", { name: "Install the extension" }).click();
     await expect(downloads).toBeHidden();
     await expect(page).toHaveURL(/#install$/);

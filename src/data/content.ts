@@ -10,6 +10,8 @@ export const LINKS = {
   studioMacArm: "https://github.com/ScanR/TypeR-Studio/releases/latest/download/TypeR-Studio-arm64.dmg",
   studioMacIntel: "https://github.com/ScanR/TypeR-Studio/releases/latest/download/TypeR-Studio-x64.dmg",
   studioWindows: "https://github.com/ScanR/TypeR-Studio/releases/latest/download/TypeR-Studio-Setup.exe",
+  studioLinuxAppImage: "https://github.com/ScanR/TypeR-Studio/releases/latest/download/TypeR-Studio-x86_64.AppImage",
+  studioLinuxDeb: "https://github.com/ScanR/TypeR-Studio/releases/latest/download/TypeR-Studio-amd64.deb",
   web: "/web/",
   news: "/news/",
   news3: "/news/typer-3-0-0/",

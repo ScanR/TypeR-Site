@@ -10,12 +10,14 @@ export function openDownloads(e?: React.MouseEvent) {
   dispatchEvent(new Event(EVENT));
 }
 
-type Os = "mac-arm" | "mac-intel" | "win" | "";
+type Os = "mac-arm" | "mac-intel" | "win" | "linux" | "linux-deb" | "";
 
 const STUDIO: { id: Os; label: string; href: string }[] = [
   { id: "mac-arm", label: "Mac (Apple chip)", href: LINKS.studioMacArm },
   { id: "mac-intel", label: "Mac (Intel)", href: LINKS.studioMacIntel },
   { id: "win", label: "Windows", href: LINKS.studioWindows },
+  { id: "linux", label: "Linux (AppImage)", href: LINKS.studioLinuxAppImage },
+  { id: "linux-deb", label: "Linux (.deb)", href: LINKS.studioLinuxDeb },
 ];
 
 type UAData = { getHighEntropyValues?: (hints: string[]) => Promise<{ architecture?: string }> };
@@ -26,6 +28,7 @@ function useOs(): Os {
   useEffect(() => {
     const platform = navigator.platform || navigator.userAgent;
     if (/win/i.test(platform)) setOs("win");
+    else if (/linux/i.test(platform) && !/android/i.test(navigator.userAgent)) setOs("linux");
     else if (/mac/i.test(platform) && !/iPhone|iPad/i.test(navigator.userAgent)) {
       setOs("mac-arm");
       const ua = (navigator as Navigator & { userAgentData?: UAData }).userAgentData;
@@ -90,7 +93,7 @@ export default function Downloads({ base = "" }: { base?: string }) {
               </a>
             ))}
           </div>
-          <p className="downloads__fine">On Windows, if SmartScreen stops it, choose More info, then Run anyway.</p>
+          <p className="downloads__fine">On Windows, if SmartScreen stops it, choose More info, then Run anyway. On Linux, the AppImage runs on any distribution and updates itself; the .deb is for Ubuntu and Debian.</p>
         </section>
       </div>
     </dialog>
