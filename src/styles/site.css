@@ -381,7 +381,7 @@ kbd { border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 
 }
 
 @media (hover: none) {
-  .btn:hover { transform: none; box-shadow: none; }
+  .btn:hover, .downloads__chip:hover { transform: none; box-shadow: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   html:not(.motion) { scroll-behavior: auto; }
@@ -573,6 +573,28 @@ kbd { border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 
 .downloads__option h3 .badge--soft { align-self: center; }
 .downloads__option > p { color: var(--muted); }
 .downloads__links { display: grid; gap: 10px; margin-top: auto; padding-top: 6px; }
+/* TypeR Studio: this computer's download, big, then the other systems as small chips */
+.downloads__icon { flex: none; width: 18px; height: 18px; }
+.downloads__primary { min-height: 68px; justify-content: flex-start; gap: 14px; padding-inline: 1.25rem; text-align: left; white-space: normal; }
+.downloads__primary .downloads__icon { width: 28px; height: 28px; }
+.downloads__primary-text { display: grid; gap: 4px; }
+.downloads__primary-text > span { font-size: 1.0625rem; }
+.downloads__primary-text small { font: 500 .8125rem/1.2 var(--f-body); opacity: .72; }
+.downloads__others-title { margin-top: 6px; font: 600 .75rem/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.downloads__others { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.downloads__chip {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 .85rem;
+  border: 1px solid var(--line-2); border-radius: 999px; background: var(--night-2); color: var(--text);
+  font: 500 .875rem/1 var(--f-body); text-decoration: none; white-space: nowrap;
+  transition: border-color .2s, background-color .2s, transform .3s var(--spring), box-shadow .3s var(--spring);
+}
+.downloads__chip .downloads__icon { width: 16px; height: 16px; color: var(--muted); transition: color .2s; }
+.downloads__chip:hover { border-color: var(--accent); color: var(--text); transform: translate(-2px, -2px); box-shadow: 2px 2px 0 var(--accent); }
+.downloads__chip:hover .downloads__icon { color: var(--accent-hi); }
+.downloads__chip:active { transform: none; box-shadow: none; transition-duration: .08s; }
+.downloads__chip-kind { color: var(--muted); }
+/* No guess for this computer: the five, as equals */
+.downloads__others--all .downloads__chip { min-height: 44px; border-radius: 6px; }
 .downloads__fine { font-size: .875rem; color: var(--muted); }
 .downloads__fine a { color: var(--text); }
 @media (max-width: 700px) {

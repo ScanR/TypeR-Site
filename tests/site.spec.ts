@@ -178,11 +178,14 @@ test("one download, socials in the nav", async ({ page }) => {
     await expect(downloads).toContainText("free, lightweight Photoshop-like app made for lettering");
     await expect(downloads.getByRole("link", { name: "the ZIP" })).toHaveAttribute("href", DOWNLOAD);
     const studio = "https://github.com/ScanR/TypeR-Studio/releases/latest/download/";
-    await expect(downloads.getByRole("link", { name: "Mac (Apple chip)" })).toHaveAttribute("href", studio + "TypeR-Studio-arm64.dmg");
-    await expect(downloads.getByRole("link", { name: "Mac (Intel)" })).toHaveAttribute("href", studio + "TypeR-Studio-x64.dmg");
-    await expect(downloads.getByRole("link", { name: "Windows" })).toHaveAttribute("href", studio + "TypeR-Studio-Setup.exe");
-    await expect(downloads.getByRole("link", { name: "Linux (AppImage)" })).toHaveAttribute("href", studio + "TypeR-Studio-x86_64.AppImage");
-    await expect(downloads.getByRole("link", { name: "Linux (.deb)" })).toHaveAttribute("href", studio + "TypeR-Studio-amd64.deb");
+    // The tests run in Chrome on a Mac with an Apple chip: that one is the big button
+    await expect(downloads.locator(".downloads__primary")).toHaveAccessibleName("Download for Mac (Apple chip)");
+    await expect(downloads.getByRole("link", { name: "Download for Mac (Apple chip)" })).toHaveAttribute("href", studio + "TypeR-Studio-arm64.dmg");
+    await expect(downloads.getByRole("link", { name: "Mac (Intel)", exact: true })).toHaveAttribute("href", studio + "TypeR-Studio-x64.dmg");
+    await expect(downloads.getByRole("link", { name: "Windows", exact: true })).toHaveAttribute("href", studio + "TypeR-Studio-Setup.exe");
+    await expect(downloads.getByRole("link", { name: "Linux (AppImage)", exact: true })).toHaveAttribute("href", studio + "TypeR-Studio-x86_64.AppImage");
+    await expect(downloads.getByRole("link", { name: "Linux (.deb)", exact: true })).toHaveAttribute("href", studio + "TypeR-Studio-amd64.deb");
+    await expect(downloads.locator(".downloads__chip")).toHaveCount(4);
     await downloads.getByRole("link", { name: "Install the extension" }).click();
     await expect(downloads).toBeHidden();
     await expect(page).toHaveURL(/#install$/);
@@ -201,6 +204,44 @@ test("one download, socials in the nav", async ({ page }) => {
     await expect(nav.getByRole("link", { name: label })).toBeVisible();
   }
   await expect(nav.getByRole("link", { name: "Download" })).toBeVisible();
+});
+
+test.describe("TypeR Studio's big download button follows the visitor's system", () => {
+  const open = async (page: Page, platform: string, userAgent: string) => {
+    await page.addInitScript(([p, ua]) => {
+      Object.defineProperty(Navigator.prototype, "platform", { get: () => p });
+      Object.defineProperty(Navigator.prototype, "userAgent", { get: () => ua });
+      Object.defineProperty(Navigator.prototype, "userAgentData", { get: () => undefined });
+    }, [platform, userAgent]);
+    await page.goto("/");
+    await page.locator(".nav__cta").click();
+    return page.getByRole("dialog", { name: "Download TypeR" });
+  };
+
+  test("Windows", async ({ page }) => {
+    const downloads = await open(page, "Win32", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+    await expect(downloads.locator(".downloads__primary")).toHaveAccessibleName("Download for Windows");
+    await expect(downloads.locator(".downloads__chip")).toHaveCount(4);
+    await expect(downloads.getByRole("link", { name: "Windows", exact: true })).toHaveCount(0);
+    await expect(downloads).toContainText("SmartScreen");
+    await expect(downloads).not.toContainText("AppImage runs");
+  });
+
+  test("Linux", async ({ page }) => {
+    const downloads = await open(page, "Linux x86_64", "Mozilla/5.0 (X11; Linux x86_64)");
+    await expect(downloads.locator(".downloads__primary")).toHaveAccessibleName("Download for Linux (AppImage)");
+    await expect(downloads.getByRole("link", { name: "Linux (.deb)", exact: true })).toBeVisible();
+    await expect(downloads).not.toContainText("SmartScreen");
+  });
+
+  test("unknown: the five as equals, with every note", async ({ page }) => {
+    const downloads = await open(page, "", "Mozilla/5.0");
+    await expect(downloads.locator(".downloads__primary")).toHaveCount(0);
+    await expect(downloads.locator(".downloads__chip")).toHaveCount(5);
+    await expect(downloads).toContainText("Choose your system");
+    await expect(downloads).toContainText("SmartScreen");
+    await expect(downloads).toContainText("AppImage runs");
+  });
 });
 
 test("new in 3.0 badges", async ({ page }) => {

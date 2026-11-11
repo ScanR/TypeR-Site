@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LINKS } from "../data/content";
+import { AppleIcon, LinuxIcon, WindowsIcon } from "./OsIcons";
 
 // The Download buttons open this choice: the Photoshop extension, or TypeR Studio.
 // `openDownloads()` can be called from anywhere; the dialog lives in the nav, on every page.
@@ -12,13 +13,22 @@ export function openDownloads(e?: React.MouseEvent) {
 
 type Os = "mac-arm" | "mac-intel" | "win" | "linux" | "linux-deb" | "";
 
-const STUDIO: { id: Os; label: string; href: string }[] = [
-  { id: "mac-arm", label: "Mac (Apple chip)", href: LINKS.studioMacArm },
-  { id: "mac-intel", label: "Mac (Intel)", href: LINKS.studioMacIntel },
-  { id: "win", label: "Windows", href: LINKS.studioWindows },
-  { id: "linux", label: "Linux (AppImage)", href: LINKS.studioLinuxAppImage },
-  { id: "linux-deb", label: "Linux (.deb)", href: LINKS.studioLinuxDeb },
+// `label` names the download for screen readers and tests; `system` and `kind` are what the
+// buttons show, the big one for this computer and the small ones for the others.
+const STUDIO: { id: Os; label: string; system: string; kind: string; detail: string; href: string; Icon: typeof AppleIcon }[] = [
+  { id: "mac-arm", label: "Mac (Apple chip)", system: "Mac", kind: "Apple chip", detail: "Apple chip · .dmg", href: LINKS.studioMacArm, Icon: AppleIcon },
+  { id: "mac-intel", label: "Mac (Intel)", system: "Mac", kind: "Intel", detail: "Intel · .dmg", href: LINKS.studioMacIntel, Icon: AppleIcon },
+  { id: "win", label: "Windows", system: "Windows", kind: "Windows", detail: "64-bit installer · .exe", href: LINKS.studioWindows, Icon: WindowsIcon },
+  { id: "linux", label: "Linux (AppImage)", system: "Linux", kind: "AppImage", detail: "AppImage · any distribution", href: LINKS.studioLinuxAppImage, Icon: LinuxIcon },
+  { id: "linux-deb", label: "Linux (.deb)", system: "Linux", kind: ".deb", detail: ".deb · Ubuntu and Debian", href: LINKS.studioLinuxDeb, Icon: LinuxIcon },
 ];
+
+const NOTES: Record<"mac" | "win" | "linux", string> = {
+  mac: "Signed and notarized. Not sure which Mac you have? Apple menu > About This Mac: a Chip line means Apple chip, a Processor line means Intel.",
+  win: "If SmartScreen stops it, choose More info, then Run anyway.",
+  linux: "The AppImage runs on any distribution and updates itself; the .deb is for Ubuntu and Debian.",
+};
+const familyOf = (os: Os) => (os.startsWith("mac") ? "mac" : os.startsWith("linux") ? "linux" : os === "win" ? "win" : "");
 
 type UAData = { getHighEntropyValues?: (hints: string[]) => Promise<{ architecture?: string }> };
 
@@ -43,6 +53,9 @@ function useOs(): Os {
 export default function Downloads({ base = "" }: { base?: string }) {
   const ref = useRef<HTMLDialogElement>(null);
   const os = useOs();
+  const mine = STUDIO.find((s) => s.id === os);
+  const others = STUDIO.filter((s) => s !== mine);
+  const family = familyOf(os);
 
   useEffect(() => {
     const dlg = ref.current;
@@ -87,13 +100,34 @@ export default function Downloads({ base = "" }: { base?: string }) {
           </h3>
           <p>A free, lightweight Photoshop-like app made for lettering. No Photoshop needed: it opens and saves PSD files, with the TypeR panel built in.</p>
           <div className="downloads__links">
-            {STUDIO.map((s) => (
-              <a key={s.id} className={`btn btn--sm btn--block ${os === s.id ? "btn--fill" : "btn--line"}`} href={s.href}>
-                {s.label}
+            {mine && (
+              <a className="btn btn--fill btn--block downloads__primary" href={mine.href} aria-label={`Download for ${mine.label}`}>
+                <mine.Icon className="downloads__icon" />
+                <span className="downloads__primary-text">
+                  <span>Download for {mine.system}</span>
+                  <small>{mine.detail}</small>
+                </span>
               </a>
-            ))}
+            )}
+            <p className="downloads__others-title">{mine ? "Other systems" : "Choose your system"}</p>
+            <div className={`downloads__others${mine ? "" : " downloads__others--all"}`}>
+              {others.map((s) => (
+                <a key={s.id} className="downloads__chip" href={s.href} aria-label={s.label}>
+                  <s.Icon className="downloads__icon" />
+                  <span>
+                    {s.system === s.kind ? s.system : (
+                      <>
+                        {s.system} <span className="downloads__chip-kind">{s.kind}</span>
+                      </>
+                    )}
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
-          <p className="downloads__fine">On Windows, if SmartScreen stops it, choose More info, then Run anyway. On Linux, the AppImage runs on any distribution and updates itself; the .deb is for Ubuntu and Debian.</p>
+          <p className="downloads__fine">
+            {family ? NOTES[family] : "On Windows, if SmartScreen stops it, choose More info, then Run anyway. On Linux, the AppImage runs on any distribution and updates itself; the .deb is for Ubuntu and Debian."}
+          </p>
         </section>
       </div>
     </dialog>
