@@ -1,5 +1,5 @@
 ---
-title: New ways to typeset
+title: Introducing Flow mode, and other cool new things
 date: 2026-11-18
 version: Studio
 summary: The whole chapter on one screen, text that sits on walls and signs, Photoshop actions, layer styles, Clip Studio brushes, and a lot of fixes.
