@@ -316,6 +316,9 @@ kbd { border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 
 .foot__tbc:hover { color: var(--accent-hi); }
 .foot__credit { margin-top: 1rem; color: var(--muted); max-width: 52ch; }
 .foot__credit a { color: var(--text); }
+.foot__legal { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin-top: .75rem; font-size: .9375rem; }
+.foot__legal a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: .2em; transition: color .2s; }
+.foot__legal a:hover { color: var(--text); }
 .foot__side { display: flex; align-items: flex-end; gap: 28px; }
 .socials { list-style: none; padding: 0; display: flex; gap: 8px; }
 .socials a { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--line-2); border-radius: 50%; transition: border-color .2s, transform .3s var(--spring); }

@@ -1,13 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Plugin } from "vite";
-import { NEWS_DIR, loadPosts } from "./posts";
+import { LEGAL_DIR, NEWS_DIR, loadPosts } from "./posts";
 
 const VIRTUAL = "virtual:news";
 const RESOLVED = `\0${VIRTUAL}`;
 
 // Gives the home page the list of posts without their text, and serves the
-// news pages in the dev server. scripts/build-news.mjs writes them for the build.
+// news pages, and the legal ones, in the dev server. scripts/build-news.mjs writes them for the build.
 export function news(): Plugin {
   return {
     name: "typer-news",
@@ -19,7 +19,8 @@ export function news(): Plugin {
     },
     configureServer(server) {
       const reload = (file: string) => {
-        if (!path.resolve(file).startsWith(NEWS_DIR)) return;
+        const changed = path.resolve(file);
+        if (!changed.startsWith(NEWS_DIR) && !changed.startsWith(LEGAL_DIR)) return;
         const list = server.moduleGraph.getModuleById(RESOLVED);
         if (list) server.moduleGraph.invalidateModule(list);
         server.ws.send({ type: "full-reload" });
@@ -28,7 +29,7 @@ export function news(): Plugin {
 
       server.middlewares.use(async (req, res, next) => {
         const url = (req.url ?? "").split("?")[0];
-        if (!/^\/news(\/|$)/.test(url)) return next();
+        if (!/^\/(news|terms|privacy)(\/|$)/.test(url)) return next();
         try {
           const { renderNewsPage } = await server.ssrLoadModule("/src/news/render.tsx");
           const pathname = url.endsWith("/") ? url : `${url}/`;

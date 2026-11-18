@@ -1,9 +1,9 @@
-// Turns the posts into static HTML, so that shared links get their own title and
+// Turns the posts, and the legal pages, into static HTML, so that shared links get their own title and
 // preview and the text is there without JavaScript. Runs on the build side only.
 import { renderToString } from "react-dom/server";
-import { NewsIndex, NewsPost } from "../components/NewsPages";
+import { LegalPage, NewsIndex, NewsPost } from "../components/NewsPages";
 import { postPath } from "./format";
-import { loadPosts } from "./posts";
+import { loadLegalPages, loadPosts } from "./posts";
 
 const ORIGIN = "https://typer.hayasaku.fr";
 
@@ -52,6 +52,12 @@ export function newsPages(): NewsPage[] {
           <Head path={postPath(post.slug)} title={post.title} description={post.summary} image={post.cover} date={post.date} />,
           <NewsPost post={post} newer={posts[i - 1]} older={posts[i + 1]} />,
         ),
+    })),
+    ...loadLegalPages().map((page) => ({
+      path: `/${page.slug}/`,
+      date: page.date,
+      html: (template: string) =>
+        fill(template, <Head path={`/${page.slug}/`} title={page.title} description={page.summary} />, <LegalPage page={page} />),
     })),
   ];
 }

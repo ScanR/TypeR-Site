@@ -15,6 +15,8 @@ export const LINKS = {
   web: "/web/",
   news: "/news/",
   news3: "/news/typer-3-0-0/",
+  terms: "/terms/",
+  privacy: "/privacy/",
   github: "https://github.com/ScanR/TypeR",
   issues: "https://github.com/ScanR/TypeR/issues",
   discord: "https://discord.com/invite/Pdmfmqk",

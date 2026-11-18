@@ -7,6 +7,7 @@ import { imageSize } from "image-size";
 import { Marked } from "marked";
 
 export const NEWS_DIR = fileURLToPath(new URL("../../content/news/", import.meta.url));
+export const LEGAL_DIR = fileURLToPath(new URL("../../content/legal/", import.meta.url));
 const PUBLIC_DIR = fileURLToPath(new URL("../../public/", import.meta.url));
 
 export type PostMeta = { slug: string; title: string; date: string; summary: string; version?: string; cover?: string };
@@ -97,4 +98,19 @@ export function loadPosts(): Post[] {
       return { ...meta, ...renderMarkdown(body) };
     })
     .sort((a, b) => b.date.localeCompare(a.date) || b.slug.localeCompare(a.slug, "en", { numeric: true }));
+}
+
+// The legal pages of content/legal: the same Markdown, with "date" as their last update.
+// Their name is their address: privacy.md becomes /privacy/.
+export type LegalPage = { slug: string; title: string; date: string; summary: string; html: string; toc: Heading[] };
+
+export function loadLegalPages(): LegalPage[] {
+  return fs
+    .readdirSync(LEGAL_DIR)
+    .filter((file) => file.endsWith(".md"))
+    .sort()
+    .map((file) => {
+      const { fields, body } = parseFrontmatter(file, fs.readFileSync(path.join(LEGAL_DIR, file), "utf8"));
+      return { slug: file.replace(/\.md$/, ""), title: fields.title, date: fields.date, summary: fields.summary, ...renderMarkdown(body) };
+    });
 }

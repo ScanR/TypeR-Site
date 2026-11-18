@@ -32,6 +32,7 @@ index.html               the page shell: SEO, Open Graph and Twitter tags, favic
 404.html                 the not-found page (a second Vite entry)
 src/App.tsx              the sections in order
 content/news/            the news posts, one Markdown file each
+content/legal/           the Terms of Use (/terms/) and the Privacy Policy (/privacy/), linked from the footer
 src/components/          Nav, Hero, Trailer, Story (What's new), Toolkit, Install, Help, News, NewsPages, Footer
 src/news/                reads the posts and renders the news pages
 src/data/content.ts      links, install commands, nav, story steps, toolkit (with the "New" flags), FAQ
@@ -75,6 +76,13 @@ cover: /images/news/3-1.webp
 - Put images in `public/images/news/` and clips in `public/videos/news/`. A clip needs a poster with the same name, in `.jpg`. It stays an `.mp4` rather than a real GIF, at a tenth of the weight.
 - `scripts/film-news.mjs` films clips on the web version with a visible cursor. `scripts/make-clips.sh` cuts them from the Photoshop recordings.
 - The older posts come from the GitHub release notes. The 3.0 post is rewritten from the CHANGELOG of the TypeR repository and the commits since 2.5, which the CHANGELOG doesn't all list.
+
+## Legal pages
+
+`content/legal/terms.md` and `content/legal/privacy.md` become `/terms/` and `/privacy/`, built like the news posts
+(same Markdown, `date` is the "Last updated" date). The Privacy Policy describes what the apps really send: update it
+when TypeR Studio starts or stops talking to a service (`web/stats.js`, `web/feedback.js`, Generative Fill, text
+detection, Font FindeR…), and change its `date`. They are the addresses to give to the App Store and Google Play.
 
 ## Content
 

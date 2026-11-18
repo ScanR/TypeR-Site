@@ -2,16 +2,17 @@ import type { ReactNode } from "react";
 import Footer from "./Footer";
 import Nav from "./Nav";
 import { formatDate, postPath } from "../news/format";
-import type { Post, PostMeta } from "../news/posts";
+import type { Heading, LegalPage as Legal, Post, PostMeta } from "../news/posts";
 
-function Shell({ children }: { children: ReactNode }) {
+// current: the nav entry to mark, src/news/main.tsx picks the same one
+function Shell({ children, current = "/news/" }: { children: ReactNode; current?: string }) {
   return (
     <>
       <a className="skip" href="#main">
         Skip to content
       </a>
       <div id="nav-host">
-        <Nav base="/" current="/news/" />
+        <Nav base="/" current={current} />
       </div>
       <main id="main">{children}</main>
       <Footer base="/" />
@@ -77,6 +78,21 @@ export function PostList({ posts }: { posts: Pick<PostMeta, "slug" | "title" | "
   );
 }
 
+function Toc({ toc }: { toc: Heading[] }) {
+  return (
+    <nav className="toc" aria-label="On this page">
+      <p className="toc__title">On this page</p>
+      <ul>
+        {toc.map((heading) => (
+          <li key={heading.id}>
+            <a href={`#${heading.id}`} dangerouslySetInnerHTML={{ __html: heading.text }} />
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 export function NewsPost({ post, newer, older }: { post: Post; newer?: PostMeta; older?: PostMeta }) {
   const hasToc = post.toc.length > 1;
   return (
@@ -93,18 +109,7 @@ export function NewsPost({ post, newer, older }: { post: Post; newer?: PostMeta;
         </div>
       </header>
       <div className={`wrap post${hasToc ? " post--toc" : ""}`}>
-        {hasToc && (
-          <nav className="toc" aria-label="On this page">
-            <p className="toc__title">On this page</p>
-            <ul>
-              {post.toc.map((heading) => (
-                <li key={heading.id}>
-                  <a href={`#${heading.id}`} dangerouslySetInnerHTML={{ __html: heading.text }} />
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
+        {hasToc && <Toc toc={post.toc} />}
         <div className="post__body">
           {post.cover && <img className="post__cover" src={post.cover} alt="" />}
           <article className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
@@ -122,6 +127,32 @@ export function NewsPost({ post, newer, older }: { post: Post; newer?: PostMeta;
               </a>
             )}
           </nav>
+        </div>
+      </div>
+    </Shell>
+  );
+}
+
+export function LegalPage({ page }: { page: Legal }) {
+  return (
+    <Shell current="">
+      <header className="newshead newshead--post">
+        <div className="hero__lines" aria-hidden="true" />
+        <div className="wrap">
+          <p className="dateline">
+            <span className="badge badge--soft">Legal</span>
+            <span>
+              Last updated <time dateTime={page.date}>{formatDate(page.date)}</time>
+            </span>
+          </p>
+          <h1 className="post__title">{page.title}</h1>
+          <p className="post__summary">{page.summary}</p>
+        </div>
+      </header>
+      <div className="wrap post post--toc">
+        <Toc toc={page.toc} />
+        <div className="post__body">
+          <article className="prose" dangerouslySetInnerHTML={{ __html: page.html }} />
         </div>
       </div>
     </Shell>

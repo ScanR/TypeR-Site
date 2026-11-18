@@ -11,6 +11,10 @@ export default function Footer({ base = "" }: { base?: string }) {
           <p className="foot__credit">
             Free under the MIT license. Built on <a href={LINKS.typertools}>TyperTools</a> by Swirt, maintained by Team ScanR.
           </p>
+          <nav className="foot__legal" aria-label="Legal">
+            <a href={LINKS.terms}>Terms of Use</a>
+            <a href={LINKS.privacy}>Privacy Policy</a>
+          </nav>
         </div>
         <div className="foot__side">
           <ul className="socials">

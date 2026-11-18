@@ -367,6 +367,34 @@ test.describe("news", () => {
   }
 });
 
+test.describe("legal pages", () => {
+  for (const [path, title] of [["/terms/", "Terms of Use"], ["/privacy/", "Privacy Policy"]]) {
+    test(`${title}: linked from the footer, static, in the sitemap`, async ({ page, request }) => {
+      await page.goto("/");
+      await page.locator(".foot__legal").getByRole("link", { name: title }).click();
+      await expect(page).toHaveURL(new RegExp(`${path}$`));
+      await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+      await expect(page).toHaveTitle(`${title} · TypeR`);
+      await expect(page.locator('#nav-links a[aria-current="page"]')).toHaveCount(0);
+      await expect(page.locator(".toc a").first()).toBeVisible();
+
+      const html = await (await request.get(path)).text();
+      expect(html).toContain(`<h1 class="post__title">${title}</h1>`);
+      const xml = await (await request.get("/sitemap.xml")).text();
+      expect(xml).toContain(`<loc>https://typer.hayasaku.fr${path}</loc>`);
+    });
+  }
+
+  test("no horizontal overflow at 375px", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 900 });
+    for (const url of ["/terms/", "/privacy/"]) {
+      await page.goto(url);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow, url).toBeLessThanOrEqual(0);
+    }
+  });
+});
+
 test("the 404 page", async ({ page }) => {
   await page.goto("/404.html");
   await expect(page.getByRole("heading", { name: "This bubble is empty" })).toBeVisible();
