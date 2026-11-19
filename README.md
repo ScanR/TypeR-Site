@@ -39,7 +39,7 @@ src/data/content.ts      links, install commands, nav, story steps, toolkit (wit
 src/hooks/               the scroll loop: nav state, hero tilt, story steps, scroll spy
 src/styles/site.css      tokens at the top (:root), then one block per section
 public/                  copied as-is: fonts, images, the story clips, og.png, robots.txt, sitemap.xml
-scripts/                 build-news.mjs writes the news pages; assemble.mjs adds TypeR Studio to the build; `node scripts/make-og.mjs` renders public/og.png; make-clips.sh cuts the story clips; make-trailer.sh compresses the trailer
+scripts/                 build-news.mjs writes the news pages; assemble.mjs adds TypeR Studio to the build; `node scripts/make-og.mjs` renders public/og.png; `node scripts/cover/make-cover.mjs` renders a news cover in the trailer's style; make-clips.sh cuts the story clips; make-trailer.sh compresses the trailer
 tests/                   Playwright: the basics
 ```
 
