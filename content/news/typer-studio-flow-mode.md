@@ -12,7 +12,7 @@ TypeR Studio came out three weeks ago, and it has changed a lot since. Here's wh
 
 All the pages of the chapter on one surface. Zoom out to see them all, move to the next page, zoom back in. You work on the page in the middle of the screen, and the script follows it.
 
-![Flow mode: zooming out on the chapter, then into the next page](/videos/news/studio-flow-mode.mp4 "No more tabs to go through")
+![Flow mode: zooming into a page of the chapter, then into the next one](/videos/news/studio-flow-mode-2.mp4 "No more tabs to go through")
 
 Turn it on in **Settings → Page display**. Solo mode is still there if you prefer one page at a time.
 
@@ -32,7 +32,7 @@ On Windows and Linux, `Cmd` is `Ctrl`.
 
 Press `P` and drag over a board, a wall or a sign drawn on the page. TypeR finds its perspective, and the text on it follows. Text you type or move there later follows too.
 
-![Auto Perspective laying a schedule flat on a board seen from the side](/videos/news/studio-auto-perspective.mp4 "Drag over the surface, the text follows")
+![Auto Perspective: a zone drawn over the raw board, then a schedule typed onto it](/videos/news/studio-auto-perspective-2.mp4 "Drag over the surface, the text follows")
 
 Drag the corners if the perspective is a little off. `Enter` takes a text out of its zone or puts it back. To set the corners by hand, there's still **Type → Perspective** (`Shift+P`).
 
@@ -48,13 +48,13 @@ It's still experimental and some bubbles come out wrong. If one does, show us on
 
 Drag a text with the Move tool and you see how far each side is from the edge of the bubble. The lines turn green when the text is centred. You can turn it off in the Move tool's options or in the **View** menu.
 
-![Dragging a text until it's centred in its bubble](/videos/news/studio-bubble-distances.mp4 "Green means centred")
+![Dragging a text until it's centred in its bubble](/videos/news/studio-bubble-distances-2.mp4 "Green means centred")
 
 ## Clip Studio Paint brushes and bubbles
 
 The new **Library** panel (**Window → Library**) imports your `.sut` brushes and `.clip` materials, one by one or in a `.zip`. Pick a brush and paint with it, or double-click a bubble or a screentone to put it on the page.
 
-![Painting with a Clip Studio brush, then placing a bubble from the Library](/videos/news/studio-library.mp4 "Your brushes and bubbles, in TypeR")
+![Painting with a Clip Studio brush, then placing a bubble from the Library](/videos/news/studio-library-2.mp4 "Your brushes and bubbles, in TypeR")
 
 ## Actions
 
