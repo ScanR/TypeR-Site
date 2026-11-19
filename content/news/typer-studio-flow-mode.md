@@ -3,10 +3,10 @@ title: Introducing Flow mode, and other cool new things
 date: 2026-11-18
 version: Studio
 summary: The whole chapter on one screen, text that sits on walls and signs, Photoshop actions, layer styles, Clip Studio brushes, and a lot of fixes.
-cover: /images/news/studio-2026-11-18-cover.webp
+cover: /images/news/studio-2026-11-18-cover-2.webp
 ---
 
-TypeR Studio came out ten days ago, and it has changed a lot since. Here's what's new. The app updates itself, so you already have all of it.
+TypeR Studio came out three weeks ago, and it has changed a lot since. Here's what's new. The app updates itself, so you already have all of it.
 
 ## Flow mode
 
